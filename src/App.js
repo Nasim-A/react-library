@@ -1,10 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import AddBook from "./components/AddBook";
 import Library from "./components/Library";
 
 function App() {
 	const [books, setBooks] = useState([]);
+
+	useEffect(() => {
+		getLocalBooks();
+	}, []);
+
+	useEffect(() => {
+		saveLocalBooks();
+	}, [books]);
+
+	const saveLocalBooks = () => {
+		localStorage.setItem("books", JSON.stringify(books));
+	};
+
+	const getLocalBooks = () => {
+		if (localStorage.getItem("books") === null) {
+			localStorage.setItem("books", JSON.stringify([]));
+		} else {
+			let localBooks = JSON.parse(localStorage.getItem("books"));
+			setBooks(localBooks);
+		}
+	};
 
 	return (
 		<div className="App text-zinc-50">
