@@ -1,13 +1,31 @@
 import React, { useState } from "react";
+import { v4 as uuid } from "uuid";
 
-const AddBook = ({ book, setBook }) => {
+const AddBook = ({ books, setBooks }) => {
+	const [book, setBook] = useState({
+		title: "",
+		author: "",
+		pages: "",
+		read: false,
+		id: "",
+	});
+
 	const handleChange = (e) => {
 		setBook({ ...book, [e.target.name]: e.target.value });
 	};
 
 	const submitForm = (e) => {
 		e.preventDefault();
-		console.log(book);
+		setBooks([
+			...books,
+			{
+				title: book.title,
+				author: book.author,
+				pages: book.pages,
+				read: book.read,
+				id: uuid(),
+			},
+		]);
 		e.target.reset();
 	};
 
@@ -18,6 +36,7 @@ const AddBook = ({ book, setBook }) => {
 					type="text"
 					name="title"
 					placeholder="Book Title"
+					required
 					className="text-center form-control block w-full my-4 px-4 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded"
 					onChange={handleChange}
 				/>
@@ -25,6 +44,7 @@ const AddBook = ({ book, setBook }) => {
 					type="text"
 					name="author"
 					placeholder="Author"
+					required
 					className="text-center form-control block w-full my-4 px-4 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded"
 					onChange={handleChange}
 				/>
@@ -32,13 +52,10 @@ const AddBook = ({ book, setBook }) => {
 					type="number"
 					name="pages"
 					placeholder="Pages"
+					required
 					className="text-center form-control block w-full my-4 px-4 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded"
 					onChange={handleChange}
 				/>
-				{/* <div className="text-center form-control block w-full my-4 px-4 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded">
-					{`Read? `}
-					<input type="checkbox" onChange={handleChange} />
-				</div> */}
 				<button
 					type="submit"
 					// onClick={submitForm}

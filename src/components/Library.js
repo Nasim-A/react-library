@@ -1,19 +1,22 @@
 import React from "react";
+import Book from "./Book";
 
-const Library = () => {
+const Library = ({ books, setBooks }) => {
 	return (
-		<div className="max-w-sm rounded overflow-hidden shadow-lg bg-slate-100 text-gray-700 m-4 w-64">
-			<div className="p-4 text-center">
-				<div className="font-bold text-xl mb-2">Book title</div>
-				<p>Author Name</p>
-				<p>Number of pages</p>
-				<button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-4">
-					Read
-				</button>
-				<button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-					Remove
-				</button>
-			</div>
+		<div className="rounded m-4 flex flex-wrap flex-row">
+			{books.map((book) => (
+				<Book
+					title={book.title}
+					author={book.author}
+					pages={book.pages}
+					read={book.read}
+					id={book.id}
+					key={book.id}
+					books={books}
+					setBooks={setBooks}
+					book={book}
+				/>
+			))}
 		</div>
 	);
 };
